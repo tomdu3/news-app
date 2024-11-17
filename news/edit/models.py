@@ -13,13 +13,16 @@ class Category(models.Model):
 class News(models.Model):
     """News model
     """
-    title = models.CharField(max_length=150)
-    slug = models.SlugField(max_length=150)
-    image = models.ImageField(upload_to="images/")
+    title = models.CharField(max_length=300)
+    slug = models.SlugField(max_length=300, unique=True)
+    image = models.ImageField(upload_to="images/", null=True, blank=True)
     content = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "News"
 
     def __str__(self):
         return self.title
