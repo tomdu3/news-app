@@ -26,3 +26,16 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    """Comment model"""
+    news = models.ForeignKey(News, on_delete=models.CASCADE)
+    name = models.CharField(max_length=150)
+    email = models.EmailField()
+    content = models.TextField()
+    status = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content

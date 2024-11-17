@@ -14,9 +14,9 @@
   - UpdatedAt: Date
 
 - Comment
+  - News: News
   - Name: String
   - Email: String
   - Content: String
-  - News: News
   - Status: Boolean
   - CreatedAt: Date
