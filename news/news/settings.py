@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +29,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("ENVIRONMENT") == "development"
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -119,10 +120,44 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+
+# Cloudflare settings
+CLOUDFLARE_R2_BUCKET_NAME = os.getenv("CLOUDFLARE_R2_BUCKET_NAME")
+CLOUDFLARE_R2_ACCESS_KEY = os.getenv("CLOUDFLARE_R2_ACCESS_KEY")
+CLOUDFLARE_R2_SECRET_KEY = os.getenv("CLOUDFLARE_R2_SECRET_KEY")
+CLOUDFLARE_R2_BUCKET_ENDPOINT = os.getenv("CLOUDFLARE_R2_BUCKET_ENDPOINT")
+
+CLOUDFLARE_R2_CONFIG_OPTIONS = {
+    "bucket_name": CLOUDFLARE_R2_BUCKET_NAME,
+    "access_key": CLOUDFLARE_R2_ACCESS_KEY,
+    "secret_key": CLOUDFLARE_R2_SECRET_KEY,
+    "endpoint_url": CLOUDFLARE_R2_BUCKET_ENDPOINT,
+    "default_acl": "public-read", # "private"
+    "signature_version": "s3v4",
+}
+
+# Django staticfiles config for storages
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",  # django-storages[s3]
+        "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS
+    },  # default > user / image / file fields uploads
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3.S3Storage",  # django-storages[s3]
+        "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS
+    },  # static files
+}
+
+
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

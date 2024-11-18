@@ -4,4 +4,9 @@
 
 {% block content %}
     <h1>Hello Home</h1>
+    {% for new in news %}
+        <h2>{{ new.title }}</h2>
+        <p>{{ new.content }}</p>
+        <img src="{{ new.image.url }}" alt="{{ new.title }}">
+    {% endfor %}
 {% endblock %}
