@@ -1,4 +1,26 @@
+import pathlib
 from django.db import models
+
+
+def image_file_upload_handler(instance, filepath):
+    """
+    Image file upload handler
+    - If used, the image field should be:
+        image = models.FileField(
+            upload_to=image_file_upload_handler,
+            null=True,
+            blank=True
+        )
+    """
+
+    # just in case instance.id isn't available
+    instance_id = instance.id if instance.id else "0"
+
+    filepath = pathlib.Path(filepath).resolve()
+    print(instance, filepath)
+
+    return f"images/{instance_id}/{filepath.name}"
+
 
 class Category(models.Model):
     """Category model"""
@@ -15,7 +37,7 @@ class News(models.Model):
     """
     title = models.CharField(max_length=300)
     slug = models.SlugField(max_length=300, unique=True)
-    image = models.ImageField(upload_to="images/", null=True, blank=True)
+    image = models.FileField(upload_to="images/", null=True, blank=True)
     content = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
