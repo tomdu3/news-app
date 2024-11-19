@@ -13,6 +13,9 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+# Import the Cloudflare R2 config
+import news.helpers.cloudflare.storages
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -133,7 +136,7 @@ CLOUDFLARE_R2_CONFIG_OPTIONS = {
     "access_key": CLOUDFLARE_R2_ACCESS_KEY,
     "secret_key": CLOUDFLARE_R2_SECRET_KEY,
     "endpoint_url": CLOUDFLARE_R2_BUCKET_ENDPOINT,
-    "default_acl": "public-read", # "private"
+    "default_acl": "public-read",  # "private"
     "signature_version": "s3v4",
 }
 
@@ -141,11 +144,11 @@ CLOUDFLARE_R2_CONFIG_OPTIONS = {
 
 STORAGES = {
     "default": {
-        "BACKEND": "helpers.cloudflare.storages.StaticFileStorage",  # django-storages[s3]
+        "BACKEND": "news.helpers.cloudflare.storages.StaticFileStorage",  # django-storages[s3]
         "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS
     },  # default > user / image / file fields uploads
     "staticfiles": {
-        "BACKEND": "helpers.cloudflare.storages.StaticFileStorage",  # django-storages[s3]
+        "BACKEND": "news.helpers.cloudflare.storages.StaticFileStorage",  # django-storages[s3]
         "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS
     },  # static files
 }
