@@ -1,0 +1,10 @@
+# Follow the .env.example format
+
+SECRET_KEY="secret key"
+# ENVIRONMENT="development"
+
+# CLOUDFLARE
+CLOUDFLARE_R2_BUCKET_NAME="CF bucket name"
+CLOUDFLARE_R2_ACCESS_KEY="CF access_key"
+CLOUDFLARE_R2_SECRET_KEY="CF secret key"
+CLOUDFLARE_R2_BUCKET_ENDPOINT="CF endpoint"
