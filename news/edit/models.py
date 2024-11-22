@@ -32,6 +32,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class News(models.Model):
     """News model
     """

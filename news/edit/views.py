@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import News
+from .forms import NewsForm
 
 # Create your views here.
 def home(request):
@@ -9,3 +10,17 @@ def home(request):
         'news': news
     }
     return render(request, 'edit/home.html', context)
+
+
+def add_news(request):
+    '''
+    add news to database
+    '''
+    if request.method == 'POST':
+        form = NewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request, 'edit/home.html', {})
+    else:
+        form = NewsForm()
+        return render(request, 'edit/add_news.html', {'form': form})
