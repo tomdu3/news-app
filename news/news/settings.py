@@ -142,16 +142,19 @@ CLOUDFLARE_R2_CONFIG_OPTIONS = {
 
 # Django staticfiles config for storages
 
-STORAGES = {
-    "default": {
-        "BACKEND": "news.helpers.cloudflare.storages.StaticFileStorage",  # django-storages[s3]
-        "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS
-    },  # default > user / image / file fields uploads
-    "staticfiles": {
-        "BACKEND": "news.helpers.cloudflare.storages.StaticFileStorage",  # django-storages[s3]
-        "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS
-    },  # static files
-}
+if DEBUG:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "news.helpers.cloudflare.storages.StaticFileStorage",  # django-storages[s3]
+            "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS
+        },  # default > user / image / file fields uploads
+        "staticfiles": {
+            "BACKEND": "news.helpers.cloudflare.storages.StaticFileStorage",  # django-storages[s3]
+            "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS
+        },  # static files
+    }
 
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
