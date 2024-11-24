@@ -15,7 +15,7 @@ class NewsForm(forms.ModelForm):
         
     def save(self, commit=True):
         instance = super().save(commit=False)
-        instance.slug = slugify(instance.title)
+        # instance.slug = slugify(instance.title)
         if commit:
             instance.save()
         return instance

@@ -13,3 +13,12 @@ h1 {
     text-align: center;
     background-color: red;
 }
+
+/* Slug preview */
+
+.slug-preview {
+    color: #666;
+    font-style: italic;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}

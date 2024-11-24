@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import News
 from .forms import NewsForm
 
@@ -20,7 +20,7 @@ def add_news(request):
         form = NewsForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return render(request, 'edit/home.html', {})
+            return redirect('home')
     else:
         form = NewsForm()
         return render(request, 'edit/add_news.html', {'form': form})
