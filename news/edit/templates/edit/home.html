@@ -6,6 +6,7 @@
     <h1>Hello Home</h1>
     {% for new in news %}
         <h2>{{ new.title }}</h2>
+        <a class="btn btn-primary" href="{% url 'edit_news' new.id %}">Edit</a>
         <p>{{ new.content }}</p>
         {% if new.image.url != "" %}
             <img src="{{ new.image.url }}" alt="{{ new.title }}" width="300">
