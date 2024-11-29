@@ -24,3 +24,18 @@ def add_news(request):
     else:
         form = NewsForm()
         return render(request, 'edit/add_news.html', {'form': form})
+
+
+def edit_news(request, id):
+    '''
+    edit news by id
+    '''
+    news = News.objects.get(id=id)
+    if request.method == 'POST':
+        form = NewsForm(request.POST, request.FILES, instance=news)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = NewsForm(instance=news)
+    return render(request, 'edit/edit_news.html', {'form': form, 'news': news})
