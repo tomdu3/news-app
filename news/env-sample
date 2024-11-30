@@ -1,7 +1,7 @@
 # Follow the .env.example format
 
 SECRET_KEY="secret key"
-# ENVIRONMENT="development"
+ENVIRONMENT="development" # or "production"
 
 # CLOUDFLARE
 CLOUDFLARE_R2_BUCKET_NAME="CF bucket name"
